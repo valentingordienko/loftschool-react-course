@@ -1,24 +1,59 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 
+import NewsPost from './components/newsPost/NewsPost';
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <footer>
-            <p>Loftschool</p>
-        </footer>
-      </div>
-    );
-  }
+
+    state = {
+        news: [],
+        newsInput: '',
+    }
+
+    handleChange = (event) => {
+
+        this.setState({
+            newsInput: event.target.value
+        })
+    }
+
+    handleKeyDown = (event) => {
+
+        if (+event.keyCode === 13) {
+
+            const newPost = {
+                id: Math.random() + Math.random(),
+                text: this.state.newsInput
+            };
+
+            this.setState({
+                news: [...this.state.news, newPost],
+                newsInput: '',
+            });
+        }
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <input
+                    className='todo-input'
+                    placeholder='Какие новости?'
+                    value={this.state.newsInput}
+                    onChange={this.handleChange}
+                    onKeyDown={this.handleKeyDown}
+                />
+                <div className="todo-container">
+                    {this.state.news.map(postObject => {
+                        return <NewsPost
+                            key={postObject.text + postObject.id}
+                            text={postObject.text}
+                        />
+                    })}
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;

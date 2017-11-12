@@ -1,36 +1,71 @@
 import React from 'react';
-import {shallow} from 'enzyme';
 import App from '../App';
+import NewsPost from '../components/newsPost/NewsPost';
+import {shallow} from 'enzyme';
 
-const wrapper = shallow(<App />);
+describe('App component', () => {
+  const wrapper = shallow(<App />);
 
-describe('check correct render', () => {
-  it('contain div with class App', () => {
-    expect(wrapper.find('div.App')).toHaveLength(1);
+  describe('test render', () => {
+    it('contain div with class App', () => {
+      expect(wrapper.find('div.App')).toHaveLength(1);
+    });
+    it('contain input', () => {
+      expect(wrapper.find('input')).toHaveLength(1);
+    });
   });
 
-  it('contain header with class App-header', () => {
-    expect(wrapper.find('header.App-header')).toHaveLength(1);
+  describe('check presence of instance methods', () => {
+    const wrapper = shallow(<App />);
+    it('contain instance method handleChange', () => {
+      expect(wrapper.instance().handleChange).toBeDefined();
+    });
+
+    it('contain instance method handleKeyDown', () => {
+      expect(wrapper.instance().handleKeyDown).toBeDefined();
+    });
   });
 
-  it('contain img with class App-logo', () => {
-    expect(wrapper.find('img.App-logo')).toHaveLength(1);
+  describe('check state content', () => {
+    const wrapper = shallow(<App />);
+    it('contain news array', () => {
+      expect(wrapper.state().news).toEqual([]);
+    });
+    it('contain newsInput with empty string', () => {
+      expect(wrapper.state().newsInput).toEqual('');
+    });
   });
 
-  it('contain p with class App-intro', () => {
-    expect(wrapper.find('p.App-intro')).toHaveLength(1);
+  describe('check callbacks', () => {
+    it('save from input to state.newsInput', () => {
+      const wrapper = shallow(<App />);
+      wrapper.find('input').simulate('change', {target: {value: 10}});
+      wrapper.update();
+      expect(wrapper.state().newsInput).toEqual(10);
+    });
+    it('create new post from value state.newsInput on press enter', () => {
+      const wrapper = shallow(<App />);
+      wrapper.find('input').simulate('change', {target: {value: 10}});
+      wrapper.update();
+      wrapper.find('input').simulate('keyDown', {keyCode: 13});
+      expect(wrapper.state().newsInput).toEqual('');
+      expect(wrapper.state().news[0].text).toEqual(10);
+    });
   });
-});
 
-describe('homework', () => {
-  it('contain footer', () => {
-    expect(wrapper.find('footer')).toHaveLength(1);
-  });
-
-  it('footer contain p with Loftschool word', () => {
-    const p = wrapper.find('footer p');
-
-    expect(p).toHaveLength(1);
-    expect(p.contains('Loftschool')).toBeTruthy();
+  describe('check Comments rendering', () => {
+    it('render NewsPost component on create new post', () => {
+      const wrapper = shallow(<App />);
+      wrapper.find('input').simulate('change', {target: {value: 10}});
+      wrapper.update();
+      wrapper.find('input').simulate('keyDown', {keyCode: 13});
+      wrapper.update();
+      const newsFromState = wrapper.state().news[0];
+      expect(
+        wrapper.contains(
+          <NewsPost key={newsFromState.text} text={newsFromState.text} />
+        )
+      ).toBeTruthy();
+    });
   });
 });
