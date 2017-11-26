@@ -4,6 +4,7 @@ import Actions from '../../actions/actions';//
 
 
 export default handleActions({
+		[Actions.fetch.shows.request]: () => [],
 		[Actions.fetch.shows.success]: (store, action) => action.payload,
 		[Actions.fetch.shows.failure]: (store, action) => action.payload,
 	},

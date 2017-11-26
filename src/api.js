@@ -6,9 +6,9 @@ export const search = query => {
 };
 
 
-
-export const show = showId =>
-  fetch(`http://api.tvmaze.com/shows/${showId}?embed=cast`, {
-    method: 'GET',
-    mode: 'cors'
-  }).then(response => response.json());
+export const shows = showId =>{
+	return fetch(`http://api.tvmaze.com/shows/${showId}?embed=cast`, {
+		method: 'GET',
+		mode: 'cors'
+	})
+};

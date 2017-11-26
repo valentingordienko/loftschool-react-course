@@ -1,0 +1,12 @@
+.actor-list-item {
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.actor-list-item__image {
+    width: 100%;
+    background-color: azure;
+}

@@ -1,0 +1,24 @@
+.shows-page {
+
+    text-align: center;
+}
+
+.shows-page__header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+    margin: 0 30px 30px;
+}
+
+.shows-page__img-container {
+    margin-bottom: 20px;
+}
+
+.shows-page__img {
+
+    width: 210px;
+}
+
+.shows-page__actors-list {
+
+
+}
