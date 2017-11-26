@@ -1,6 +1,6 @@
 import React, {Component} from 'react';//
 import {Route, Switch, Redirect} from 'react-router-dom';//
-import Search from '../Search';//
+import Search from '../SearchPage';//
 import ShowPage from '../ShowPage';//
 
 class AppRouter extends Component {
